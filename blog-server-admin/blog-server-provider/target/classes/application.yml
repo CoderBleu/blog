@@ -1,0 +1,13 @@
+server:
+  port: 9110
+
+#spring 相关配置
+spring:
+  application:
+    name: provider-service
+
+#将生产者注册到注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9300/eureka/

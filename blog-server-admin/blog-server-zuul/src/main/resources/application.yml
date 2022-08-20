@@ -1,0 +1,20 @@
+server:
+  port: 9400
+
+#spring 相关配置
+spring:
+  application:
+    name: zuul-service
+
+#将网关服务注册到注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9300/eureka/
+
+zuul:
+  routes:
+    service-consumer:   # 设置服务a路径名称随便起
+      path: /blog/**  #过滤请求
+      serviceId: consume-service  # 这里写a服务的注册名字
+
