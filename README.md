@@ -13,3 +13,13 @@ blog-server-consume   消费端   9210    http://localhost:9210/consumer
 
 版本：springcloud: Greenwich.SR1   spring.boot: 2.1.x. 以上
 服务熔断级制，服务负载均衡
+
+zuul服务监控: 
+
+服务监控查看心跳
+http://localhost:9400/actuator
+http://localhost:9400/actuator/hystrix.stream
+
+可视化界面
+http://localhost:9400/hystrix
+监控http://localhost:9400/actuator/hystrix.stream
