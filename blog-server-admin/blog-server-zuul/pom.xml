@@ -28,5 +28,10 @@
             <artifactId>spring-cloud-starter-zuul</artifactId>
             <version>1.4.6.RELEASE</version>
         </dependency>
+        <!--网管监控-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+        </dependency>
     </dependencies>
 </project>

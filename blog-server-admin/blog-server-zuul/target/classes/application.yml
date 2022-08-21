@@ -11,10 +11,22 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:9300/eureka/
-
+#zuul路由规则
 zuul:
+  #禁用Zuul 默认的异常处理filter
+  SendErrorFilter:
+    error:
+      disable: true
+  ignored-patterns: /**/order/**  #排除所有包含/order/的路径
+  prefix: /api #路由前缀
   routes:
     service-consumer:   # 设置服务a路径名称随便起
       path: /blog/**  #过滤请求
       serviceId: consume-service  # 这里写a服务的注册名字
 
+#度量指标监控与健康检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
