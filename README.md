@@ -22,10 +22,8 @@ blog-server-consume   消费端   9210    http://localhost:9210/consumer
 
 zuul服务监控: 
 
-服务监控查看心跳
-http://localhost:9400/actuator
-http://localhost:9400/actuator/hystrix.stream
 
-可视化界面
-http://localhost:9400/hystrix
-监控http://localhost:9400/actuator/hystrix.stream
+查看监控服务：http://localhost:9400/actuator
+查看心跳:http://localhost:9400/actuator/hystrix.stream
+
+可视化界面：访问 http://localhost:9400/hystrix 输入http://localhost:9400/actuator/hystrix.stream后monitor
