@@ -19,7 +19,7 @@ public class Devtool {
          * 新建模版名 demo
          */
         CodeGeneratorUtil.codeGenerator(CodeGeneratorUtil.dataSourceConfigBuild(generatorUtil),
-                "com.blog.business", "demo");
+                "com.blog.business.blog", "demo");
     }
 
 }

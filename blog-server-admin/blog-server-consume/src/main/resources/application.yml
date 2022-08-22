@@ -16,7 +16,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath:/com/blog/business/demo/mapper/*.xml
+  mapper-locations: classpath:/com/blog/business/blog/**/*.xml
 
 #将消费者注册到注册中心
 eureka:
