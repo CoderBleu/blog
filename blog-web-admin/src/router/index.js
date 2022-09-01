@@ -51,8 +51,104 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
+  },
+
+  {
+    path: '/blog_post',
+    component: Layout,
+    redirect: '/blog_post/articles',
+    name: 'BlogPost',
+    meta: { title: '博文管理', icon: 'table' },
+    children: [
+      {
+        path: 'articles',
+        name: 'Articles',
+        component: () => import('@/views/blog_post/articles/index'),
+        meta: { title: '文章管理', icon: 'tree' }
+      },
+      {
+        path: 'categories',
+        name: 'Categories',
+        component: () => import('@/views/blog_post/categories/index'),
+        meta: { title: '分类管理', icon: 'table' }
+      },
+      {
+        path: 'tags',
+        name: 'Tags',
+        component: () => import('@/views/blog_post/tags/index'),
+        meta: { title: '标签管理', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/website',
+    component: Layout,
+    redirect: '/website',
+    name: 'Website',
+    meta: { title: '网站管理', icon: 'table' },
+    children: [
+      {
+        path: 'configure',
+        name: 'Configure',
+        component: () => import('@/views/website/configure/index'),
+        meta: { title: '网站配置', icon: 'tree' }
+      },
+      // todo 首页banner？
+      {
+        path: 'comment',
+        name: 'Comment',
+        component: () => import('@/views/website/comment/index'),
+        meta: { title: '评论管理', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/internal',
+    component: Layout,
+    redirect: '/internal',
+    name: 'Internal',
+    meta: { title: '内部工具', icon: 'table' },
+    children: [
+      {
+        path: 'files_storage',
+        name: 'FilesStorage',
+        component: () => import('@/views/internal/files_storage/index'),
+        meta: { title: '文件存储', icon: 'tree' }
+      }
+      // ... 待扩展
+    ]
+  },
+
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system',
+    name: 'System',
+    meta: { title: '系统管理', icon: 'table' },
+    children: [
+      {
+        path: 'users',
+        name: 'Users',
+        component: () => import('@/views/system/users/index'),
+        meta: { title: '用户管理', icon: 'tree' }
+      },
+      {
+        path: 'roles',
+        name: 'Roles',
+        component: () => import('@/views/system/roles/index'),
+        meta: { title: '角色管理', icon: 'table' }
+      },
+      {
+        path: 'permission',
+        name: 'Permission',
+        component: () => import('@/views/system/permission/index'),
+        meta: { title: '权限管理', icon: 'table' }
+      }
+    ]
   },
 
   {
