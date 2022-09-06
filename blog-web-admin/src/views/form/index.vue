@@ -1,84 +1,239 @@
 <template>
-  <div class="app-container">
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
-      </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select v-model="form.region" placeholder="please select your zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Activity time">
-        <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%;" />
-        </el-col>
-        <el-col :span="2" class="line">-</el-col>
-        <el-col :span="11">
-          <el-time-picker v-model="form.date2" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="Online activities" name="type" />
-          <el-checkbox label="Promotion activities" name="type" />
-          <el-checkbox label="Offline activities" name="type" />
-          <el-checkbox label="Simple brand exposure" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
-        <el-input v-model="form.desc" type="textarea" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="form">
+    <MblogForm
+      ref="ruleForm"
+      :label-width="labelWidth"
+      :form-config="formConfig"
+      :form-data="formData"
+      :rules="rules"
+      :options="options"
+      @uploadFileChange="uploadFileChange"
+      @uploadbefore="uploadbefore"
+    >
+      <template slot="upload">
+        <img v-if="formData.sfz" :src="formData.sfz" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon" />
+      </template>
+    </MblogForm>
   </div>
 </template>
 
 <script>
+import MblogForm from '@/components/mblog/table/MblogForm'
+
 export default {
+  components: { MblogForm },
   data() {
+    // const validatePassword = (rule, value, callback) => {
+    //   // if (value === '') {
+    //   //   callback(new Error('请输入密码'));
+    //   // } else {
+    //   //   if ((this).formData.rePwd !== '') {
+    //   //     (this.$refs as any).ruleForm.validateField('rePwd');
+    //   //   }
+    //   //   callback();
+    //   // }
+    // };
+    // const validaterePwd = (rule: any, value: string, callback: any) => {
+    //   if (value === '') {
+    //     callback(new Error('请再次输入密码'));
+    //   } else if (value !== (this as any).formData.newPwd) {
+    //     callback(new Error('两次输入密码不一致!'));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
-      form: {
+      // 表单域标签的宽度
+      labelWidth: '150px',
+      // 表单配置
+      formConfig: [
+        {
+          label: '活动名称',
+          prop: 'name',
+          type: 'input',
+          width: '150px'
+        },
+        {
+          label: '活动区域',
+          prop: 'region',
+          type: 'select',
+          width: '200px',
+          options: [
+            {
+              label: '区域一',
+              value: 'shanghai'
+            },
+            {
+              label: '区域二',
+              value: 'beijing'
+            }
+          ]
+        },
+        {
+          label: '即时配送',
+          prop: 'delivery',
+          type: 'switch'
+        },
+        {
+          label: '活动性质',
+          prop: 'type',
+          type: 'checkbox',
+          checkboxs: [
+            {
+              label: '线上品牌商赞助'
+            },
+            {
+              label: '线下场地免费'
+            }
+          ]
+        },
+        {
+          label: '特殊资源',
+          prop: 'resource',
+          type: 'radio',
+          radios: [
+            {
+              label: '线上品牌商赞助'
+            },
+            {
+              label: '线下场地免费'
+            }
+          ]
+        },
+        {
+          label: '身份证正面照',
+          prop: 'sfz',
+          type: 'upload',
+          action: '/',
+          limit: 1
+        },
+        {
+          label: '活动形式',
+          prop: 'desc',
+          type: 'textarea',
+          width: '200px',
+          rows: '5',
+          maxlength: '30',
+          showWordLimit: true
+        },
+        {
+          label: '密码',
+          prop: 'newPwd',
+          type: 'password',
+          width: '200px'
+        },
+        {
+          label: '确认密码',
+          prop: 'rePwd',
+          type: 'password',
+          width: '200px'
+        },
+        {
+          label: '地址',
+          prop: 'selectedOptions',
+          type: 'cascader',
+          width: '300px'
+          // change: (data: any) => {
+          //   (self as any).changAddress(data);
+          // }
+        },
+        {
+          type: 'slotName',
+          slotName: 'button'
+        }
+      ],
+      // 表单数据
+      formData: {
         name: '',
         region: '',
-        date1: '',
-        date2: '',
         delivery: false,
         type: [],
         resource: '',
-        desc: ''
+        sfz: '',
+        desc: '',
+        rePwd: '',
+        newPwd: '',
+        selectedOptions: []
+      },
+      // 表单规则
+      rules: {
+        name: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+        region: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        type: [
+          {
+            type: 'array',
+            required: true,
+            message: '请至少选择一个活动性质',
+            trigger: 'change'
+          }
+        ],
+        resource: [
+          { required: true, message: '请选择活动资源', trigger: 'change' }
+        ],
+        sfz: [{ required: true, message: '请上传身份证' }],
+        desc: [{ required: true, message: '请填写活动形式', trigger: 'blur' }],
+        newPwd: [
+          { required: true, validator: '', trigger: 'blur' }
+        ],
+        rePwd: [{ required: true, validator: '', trigger: 'blur' }],
+        selectedOptions: [{ required: true, message: '地址' }]
       }
+      // 省市区三级联动数据
+      // options: regionData
     }
   },
+  mounted() {
+    console.log('form')
+  },
   methods: {
-    onSubmit() {
-      this.$message('submit!')
+    // 转化省市区为汉字
+    changAddress(value) {
     },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
+    submitForm(formName) {
+      debugger
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
+    },
+    resetForm() {
+
+    },
+    uploadFileChange(localUrl) {
+
+    },
+    uploadbefore(file) {
+      const isJPG = file.type === 'image/jpeg'
+      if (!isJPG) {
+        this.$tipMessage('error', '上传头像图片只能是 JPG 格式!')
+      }
     }
   }
 }
 </script>
 
-<style scoped>
-.line{
+<style lang="scss" scoped>
+.form {
+  height: 100%;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
   text-align: center;
 }
 </style>
